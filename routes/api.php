@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 //below line added
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\PasswordResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,10 @@ Route::controller(UserController::class)->group(function() {
     Route::post('register', 'registerUser');
 });
 
+Route::post('send_reset_password_email', [PasswordResetController::class, 'send_reset_password_email']);
+Route::post('reset_password', [PasswordResetController::class, 'reset_password']);
+
 Route::controller(UserController::class)->group(function() {
     Route::get('user', 'userDetails');
-    Route::post('logout', 'userLogout');
+    Route::get('logout', 'userLogout');
 })->middleware('auth:api');

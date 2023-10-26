@@ -1,49 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
-<body>
-    {{-- <button id="logout" onclick="logout()">
+@extends('layouts.app')
+
+@section('content')
+    <button id="logout" onclick="logout()">
         Logout
     </button>
 
-    <div class="container">
-        <h1>Login</h1>
+    <div>
         <form id="login-form">
+            <h1>Login</h1>
             @csrf
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" required>
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required>
             <button type="submit">Login</button>
+            <br>
+            <br>
+            <a href="/forgot_password">
+                <button type="button">Forgot Password ?</button>
+            </a>
         </form>
         <div id="response"></div>
-    </div> --}}
-    
-    @if (Auth::check())
-        <button id="logout" onclick="logout()">
-            Logout
-        </button>
-    @else
-        <div class="container">
-            <h1>Login</h1>
-            <form id="login-form">
-                @csrf
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required>
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required>
-                <button type="submit">Login</button>
-            </form>
-            <div id="response"></div>
-        </div>
-    @endif
+    </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const access_token = localStorage.getItem('access_token');
+            if (access_token) {
+                // If access_token is present, show the Logout button and hide the login form
+                document.getElementById('logout').style.display = 'block';
+                document.getElementById('login-form').style.display = 'none';
+            } else {
+                // If access_token is not present, show the login form and hide the Logout button
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('logout').style.display = 'none';
+            }
+        });
+
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -70,7 +63,7 @@
                     // Login successful, you can handle the response as needed
                     document.getElementById('response').textContent = 'Login successful';
 
-                    // window.location.href = '/login';
+                    window.location.href = '/';
                 } else {
                     // Login failed, display an error message
                     document.getElementById('response').textContent = 'Login failed';
@@ -89,7 +82,7 @@
             
             // Send a POST request to your server to log in the user
             fetch('/api/logout', {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -99,12 +92,13 @@
             .then(data => {
                 if (data.status === 200) {
                     // console.log(data);
-
+                    localStorage.removeItem('access_token');
                     document.getElementById('response').textContent = 'Logout successful';
 
-                    // window.location.href = '/login';
+                    window.location.href = '/';
                 } else {
                     // Login failed, display an error message
+                    console.log("error");
                     document.getElementById('response').textContent = 'Logout failed';
                 }
             })
@@ -113,6 +107,4 @@
             });
         }
     </script>
-
-</body>
-</html>
+@endsection

@@ -17,10 +17,10 @@ class UserController extends Controller
 {
     public function registerUser(Request $request) 
     {
-        // $data = $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required|unique',
-        //     'password' => 'required',
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required|email|unique:users',
+        //     'password'=>'required',
         // ]);
         $data = $request->only('name', 'email', 'password');
 
@@ -37,8 +37,9 @@ class UserController extends Controller
         catch (\Exception $exception) {
             return response([
                 'status' => 401,
-                'message' => 'user not created'
-            ]);
+                'message' => 'user not created',
+                'error' => $exception
+            ], 401);
         }
         
     }
