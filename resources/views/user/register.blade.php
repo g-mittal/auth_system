@@ -43,7 +43,7 @@
                     // Login successful, you can handle the response as needed
                     document.getElementById('response').textContent = data.message;
 
-                    // window.location.href = '/login';
+                    window.location.href = '/login';
                 } else {
                     // Login failed, display an error message
                     document.getElementById('response').textContent = data.error.errorInfo;

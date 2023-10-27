@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <div class="container">
         <form id="login-form">
             <h1>Enter new password</h1>
@@ -48,19 +42,13 @@
                 if (data.status === 200) {
                     console.log(data);
 
-                    
+                    alert(data.message);
 
-                    // localStorage.setItem('access_token', data.access_token);
-
-                    // Login successful, you can handle the response as needed
-                    // document.getElementById('response').textContent = data.message;
-
-                    alert("password reset successful, please login with your new password")
-
-                    // window.location.href = '/';
+                    window.location.href = '/login';
                 } else {
                     // Reset failed, display an error message
-                    // document.getElementById('response').textContent = data.message;
+                    alert(data.message);
+                    window.location.href = '/forgot_password';
                 }
             })
             .catch(error => {
@@ -68,5 +56,4 @@
             });
         });
     </script>
-</body>
-</html>
+@endsection

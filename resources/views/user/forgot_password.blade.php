@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <div class="container">
         <form id="login-form">
-            <h1>Reset Password</h1>
+            <h1>Reset your password</h1>
             @csrf
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email" placeholder="enter email" required>
             <br>
             <br>
             <button type="submit">Submit</button>
@@ -44,11 +38,13 @@
 
                     // Login successful, you can handle the response as needed
                     document.getElementById('response').textContent = data.message;
+                    alert(data.message);
 
                     // window.location.href = '/';
                 } else {
                     // Login failed, display an error message
                     document.getElementById('response').textContent = data.message;
+                    alert(data.message);
                 }
             })
             .catch(error => {
@@ -56,5 +52,4 @@
             });
         });
     </script>
-</body>
-</html>
+@endsection
